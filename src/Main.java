@@ -41,7 +41,7 @@ public class Main {
                     displayListOfRecordings();
                 }
                 case 5 -> {
-                    printFace();
+                    printSmileFace();
                     System.err.println("Good bye");
                     break loop;
                 }
@@ -54,7 +54,7 @@ public class Main {
     private static void insertUser() {
         User user = InsertUtil.defineUserDetails(userArrayList);
         InsertUtil.insertNewRecord(user, userArrayList);
-        printFace();
+        printSmileFace();
         System.out.println("User successfully added");
     }
     //Module 1 ENDS
@@ -66,7 +66,7 @@ public class Main {
             System.out.println("There is no data...");
         } else {
             DeleteUtil.delete(userArrayList);
-            printFace();
+            printSmileFace();
             System.err.println("User successfully deleted");
         }
     }
@@ -118,7 +118,7 @@ public class Main {
         System.out.print("\nWhat would you like to do? ");
     }
 
-    private static void printFace() {
+    private static void printSmileFace() {
         System.out.println(" +\"\"\"\"\"+ ");
         System.out.println("[| o o |]");
         System.out.println(" |  ^  | ");
