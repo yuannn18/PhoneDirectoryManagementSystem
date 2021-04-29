@@ -66,8 +66,7 @@ public class Main {
             System.out.println("There is no data...");
         } else {
             DeleteUtil.delete(userArrayList);
-            printSmileFace();
-            System.err.println("User successfully deleted");
+
         }
     }
     //Module 2 ENDS

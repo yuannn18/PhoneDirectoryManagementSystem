@@ -9,12 +9,13 @@ public class DeleteUtil {
     static Scanner scanner = new Scanner(System.in);
 
     public static void delete(ArrayList<User> userArrayList) {
-        User user = BinarySearchUtil.findUserBinary(userArrayList, scanner.next());
+        String name = scanner.next();
+        User user = BinarySearchUtil.findUserBinary(userArrayList, name);
         if (user == null) {
             System.out.println("There is no such user in Database");
         } else {
-            userArrayList.remove(user);
-
+            userArrayList.remove(BinarySearchUtil.binarySearch(userArrayList,name));
+            System.out.println("User successfully deleted");
         }
     }
 
