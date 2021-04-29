@@ -1,59 +1,49 @@
 import models.User;
+import utils.BinarySearchUtil;
+import utils.DeleteUtil;
+import utils.InsertUtil;
 import utils.QuickSortUtil;
-import utils.UserUtils;
 
+import javax.tools.JavaCompiler;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
-    static String name;
-    static String number;
-    private static ArrayList<User> userArrayList = new ArrayList<>();
+    private static final ArrayList<User> userArrayList = new ArrayList<>();
+    static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         program();
     }
 
-    private static void printMainScreen() {
-
-        System.out.println("\n******* Phone Directory Management System *******\n" +
-                "      1.Insert new records\n" +
-                "      2.Delete existing records\n" +
-                "      3.Search a record\n" +
-                "      4.Display records in Alphabetic order\n" +
-                "      5.Quit the system");
-
-        System.out.print("\nWhat would you like to do? ");
-    }
-
     private static void program() {
-        Scanner scanner = new Scanner(System.in);
-        int answer;
-
+        byte answer;
         loop:
         while (true) {
             printMainScreen();
-            answer = scanner.nextByte();
 
+            answer = scanner.nextByte();
             switch (answer) {
                 case 1:
                     System.out.println("\nInsert new records:");
-                    insertNewRecord(defineUserDetails(scanner));
+                    insertUser();
                     break;
                 case 2:
                     System.out.println("\nDelete records:");
-                    deleteItemRecord(scanner);
+                    delete();
                     break;
                 case 3:
-                    System.out.println("\nSearch a record:");
-                    search(scanner);
+                    System.out.println("\nSearch a record by name:");
+                    searchBinary();
                     break;
                 case 4:
                     System.out.println("\nDisplay records in sorted order:");
                     displayListOfRecordings();
                     break;
                 case 5:
+                    printFace();
+                    System.err.println("Good bye");
                     break loop;
                 default:
                     System.out.println("\nUnknown Option Selected!");
@@ -63,174 +53,78 @@ public class Main {
     }
 
     //Module 1 STARTS
-
-    private static User defineUserDetails(Scanner scanner) {
-
-
-        User user = new User();
-        setUserName(user,scanner);
-
-        System.out.print("Address: ");
-        user.setAddress(scanner.next());
-
-        setUserNumber(user,scanner);
-        return user;
-    }
-
-    private static void setUserName(User user, Scanner scanner){
-        System.out.print("Name (should be unique): ");
-        name = scanner.next();
-        if(findByName(name) == null || userArrayList.isEmpty()){
-            user.setName(name);
-        }
-        else {
-            System.out.println("Error, such name already exists");
-
-
-            setUserName(user,scanner);
-        }
-    }
-
-    private static void setUserNumber(User user, Scanner scanner){
-        System.out.print("Number (should be unique): ");
-        number = scanner.next();
-        if(findByNumber(number) == null || userArrayList.isEmpty()){
-            user.setPhoneNumber(number);
-        }
-        else {
-            System.out.println("Error, such name already exists");
-            setUserNumber(user,scanner);
-        }
-    }
-
-
-
-    private static void insertNewRecord(User user) {
-        userArrayList.add(user);
+    private static void insertUser() {
+        User user = InsertUtil.defineUserDetails(userArrayList);
+        InsertUtil.insertNewRecord(user, userArrayList);
+        printFace();
+        System.out.println("User successfully added");
     }
     //Module 1 ENDS
 
+
     //Module 2 STARTS
-    private static void deleteExistingRecord(User user) {
-        userArrayList.remove(user);
-    }
-
-    private static void deleteItemRecord(Scanner scanner) {
-
-        User user;
-        System.out.println("\n******* DELETE RECORD *******\n" +
-                "      1.Delete by number\n" +
-                "      2.Delete by name\n" +
-                "      3.<-- BACK");
-
-        byte answer = scanner.nextByte();
-
-        switch (answer) {
-            case 1:
-                System.out.println("\nNumber:");
-                user = findByNumber(scanner.next());
-                if (user != null) {
-                    deleteExistingRecord(user);
-                } else {
-                    System.out.println("There is no such user with given number");
-                }
-                break;
-            case 2:
-                System.out.println("\nName:");
-                user = findByName(scanner.next());
-                if (user != null) {
-                    deleteExistingRecord(user);
-                } else {
-                    System.out.println("There is no such user with given name");
-                }
-                break;
-            case 3:
-                break;
-            default:
-                System.out.println("\nUnknown Option Selected!");
-                break;
+    private static void delete() {
+        if (userArrayList.isEmpty()) {
+            System.out.println("There is no data...");
+        } else {
+            DeleteUtil.delete(userArrayList);
+            printFace();
+            System.err.println("User successfully deleted");
         }
     }
-
-
     //Module 2 ENDS
 
-    //Model 3
-
-    private static void search(Scanner scanner) {
-
-        User user;
-        System.out.println("\n******* SEARCH RECORD *******\n" +
-                "      1.Search by number\n" +
-                "      2.Search by name\n" +
-                "      3.Search by address\n" +
-                "      4.<--BACK ");
-
-        byte answer = scanner.nextByte();
-
-        switch (answer) {
-            case 1:
-                user = findByNumber(scanner.next());
-                if (user != null) {
-                    System.out.println(user.toString());
-                } else {
-                    System.out.println("There is no such user with given number");
-                }
-                break;
-            case 2:
-                user = findByName(scanner.next());
-                if (user != null) {
-                    System.out.println(user.toString());
-                } else {
-                    System.out.println("There is no such user with given name");
-                }
-                break;
-            case 3:
-                user = findByAddress(scanner.next());
-                if (user != null) {
-                    System.out.println(user.toString());
-                } else {
-                    System.out.println("There is no such user with given address");
-                }
-                break;
-            case 4:
-                break;
-            default:
-                System.out.println("\nUnknown Option Selected!");
-                break;
-        }
-
-
-    }
-
-    private static User findByNumber(String number) {
-        return UserUtils.findByNumber(userArrayList, number);
-    }
-
-    private static User findByAddress(String address) {
-        return UserUtils.findByAddress(userArrayList, address);
-    }
-
-    private static User findByName(String name) {
-        return UserUtils.findByName(userArrayList, name);
-
-    }
-
-
-    //Model 4 STARTS
-    private static void displayListOfRecordings() {
-
-        if (!userArrayList.isEmpty()) {
-            QuickSortUtil.quickSort(userArrayList, 0, userArrayList.size()-1);
-            for (User user : userArrayList) {
+    //Module 3 STARTS
+    private static void searchBinary() {
+        if (userArrayList.isEmpty()) {
+            System.out.println("There is no data...");
+        } else {
+            User user = BinarySearchUtil.findUserBinary(userArrayList, scanner.next());
+            if (user == null) {
+                System.out.println("There is no such user");
+            } else {
                 System.out.println(user.toString());
+            }
+        }
+    }
+    //Module 3 ENDS
+
+    //Module 4 STARTS
+    private static void displayListOfRecordings() {
+        int counter = 1;
+        if (!userArrayList.isEmpty()) {
+            QuickSortUtil.quickSort(userArrayList, 0, userArrayList.size() - 1);
+            for (User user : userArrayList) {
+                System.out.println(counter + ".");
+                System.out.println(user.toString());
+                counter++;
             }
         } else {
             System.out.println("There is no data...");
         }
     }
-    //Model 4 ENDS
+    //Module 4 ENDS
 
+    //Screen
+    private static void printMainScreen() {
+
+        System.out.println("\n******* Phone Directory Management System *******\n" +
+                "      [1]Insert new records\n" +
+                "      [2]Delete existing records\n" +
+                "      [3]Search a record by name\n" +
+                "      [4]Display records in Alphabetic order\n" +
+                "      [5]Quit the system");
+
+        System.out.print("\nWhat would you like to do? ");
+    }
+
+    private static void printFace() {
+        System.out.println(" +\"\"\"\"\"+ ");
+        System.out.println("[| o o |]");
+        System.out.println(" |  ^  | ");
+        System.out.println(" | '-' | ");
+        System.out.println(" +-----+ ");
+    }
 
 }
 

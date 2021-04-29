@@ -40,11 +40,9 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", address='" + address + '\'' +
-                '}';
+        return "Name:         " + name +
+                "\nPhone Number: " + phoneNumber +
+                "\nAddress:      " + address + "\n ------------ ";
     }
 }
 
