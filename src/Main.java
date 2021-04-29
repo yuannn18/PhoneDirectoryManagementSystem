@@ -4,7 +4,6 @@ import utils.DeleteUtil;
 import utils.InsertUtil;
 import utils.QuickSortUtil;
 
-import javax.tools.JavaCompiler;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -25,29 +24,28 @@ public class Main {
 
             answer = scanner.nextByte();
             switch (answer) {
-                case 1:
+                case 1 -> {
                     System.out.println("\nInsert new records:");
                     insertUser();
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.println("\nDelete records:");
                     delete();
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     System.out.println("\nSearch a record by name:");
                     searchBinary();
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     System.out.println("\nDisplay records in sorted order:");
                     displayListOfRecordings();
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     printFace();
                     System.err.println("Good bye");
                     break loop;
-                default:
-                    System.out.println("\nUnknown Option Selected!");
-                    break;
+                }
+                default -> System.out.println("\nUnknown Option Selected!");
             }
         }
     }
@@ -108,12 +106,14 @@ public class Main {
     //Screen
     private static void printMainScreen() {
 
-        System.out.println("\n******* Phone Directory Management System *******\n" +
-                "      [1]Insert new records\n" +
-                "      [2]Delete existing records\n" +
-                "      [3]Search a record by name\n" +
-                "      [4]Display records in Alphabetic order\n" +
-                "      [5]Quit the system");
+        System.out.println("""
+
+                ******* Phone Directory Management System *******
+                      [1]Insert new records
+                      [2]Delete existing records
+                      [3]Search a record by name
+                      [4]Display records in Alphabetic order
+                      [5]Quit the system""");
 
         System.out.print("\nWhat would you like to do? ");
     }
