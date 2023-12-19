@@ -82,4 +82,4 @@ If you wish to contribute to this project, please fork the repository and submit
 
 ## License
 This project is licensed under the MIT License.
-[LICENSE](LICENSE) file for details.
+[LICENSE](LICENSE.md) file for details.
