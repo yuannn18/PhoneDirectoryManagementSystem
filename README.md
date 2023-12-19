@@ -9,7 +9,7 @@ This project is a Java-based phone directory management system designed for the 
 
 
 ### Prepared by:
-- [KARASSAY Yelaman](https://twitter.com/valikhanovich)
+[KARASSAY Yelaman](https://twitter.com/valikhanovich)
 
 ### Date:
 April 30, 2021
