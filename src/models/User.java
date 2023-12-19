@@ -1,5 +1,9 @@
 package models;
 
+/**
+ * This class represents a user.
+ * A user has a name, a phone number, and an address.
+ */
 public class User {
     private String name;
     private String phoneNumber;
@@ -10,10 +14,11 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.address = address;
     }
-
+    //Constructor
     public User() {
     }
 
+    //Getter and Setter
     public String getName() {
         return name;
     }
@@ -37,7 +42,7 @@ public class User {
     public void setAddress(String address) {
         this.address = address;
     }
-
+    //toString
     @Override
     public String toString() {
         return "Name:         " + name +
